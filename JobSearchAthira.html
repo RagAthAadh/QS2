@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UAE Construction Job Search Links</title>
+<style>
+    body { font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px; }
+    h1, h2, h3 { color: #2c3e50; }
+    h1 { text-align: center; }
+    .section { margin: 20px 0; padding: 15px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .link-button { display: block; margin: 6px 0; padding: 10px 15px; background-color: #0077b5; color: white; text-decoration: none; border-radius: 6px; width: fit-content; }
+    .link-button:hover { background-color: #005582; }
+</style>
+</head>
+<body>
+
+<h1>UAE Construction Job Search Links</h1>
+
+<div class="section" id="linkedin-links">
+    <h2>LinkedIn Searches</h2>
+</div>
+
+<div class="section" id="indeed-links">
+    <h2>Indeed Searches</h2>
+</div>
+
+<script>
+    // ================= Roles =================
+    const roles = [
+        {name: "Quantity Surveyor / Junior QS / Assistant QS", keywords: '("Quantity Surveyor" OR QS OR "Junior QS" OR "Assistant QS")', negativeAction: 'NOT senior', negativeLocation: 'NOT senior'},
+        {name: "Estimator / Takeoff Engineer", keywords: '(Estimator OR "Estimation Engineer" OR Takeoff Engineer OR "Quantity Take-off Engineer")', negativeAction: 'NOT senior', negativeLocation: 'NOT senior'},
+        {name: "Fit-Out / Commercial / Coordinator", keywords: '("Fit-Out Estimator" OR "Commercial Engineer" OR "Technical Office Engineer" OR "Project Coordinator")', negativeAction: 'NOT manager', negativeLocation: 'NOT senior'},
+        {name: "Interior / Civil / MEP", keywords: '("Interior Estimator" OR "Joinery Estimator" OR "Civil Estimator" OR "MEP Estimator")', negativeAction: 'NOT manager', negativeLocation: 'NOT senior'}
+    ];
+
+    // LinkedIn Actions
+    const actions = ["hiring", "vacancy", '"open position"', '"immediate joiner"'];
+
+    // LinkedIn Locations
+    const linkedinLocations = ["RAK", "Ras Al Khaimah", "UAE", "United Arab Emirates", "Ajman", "Sharjah", "Dubai", "Fujairah", "Umm Al Quwain"];
+
+    // Indeed Locations
+    const indeedLocations = ["RAK", "Ras Al Khaimah", "RAS AL-KHAIMAH", "UAQ", "Umm Al Quwain", "Ajman", "Sharjah", "Dubai", "Fujairah", "UAE", "United Arab Emirates"];
+    const indeedRoles = '("Quantity Surveyor" OR QS OR "Junior QS" OR "Assistant QS" OR Estimator OR "Estimation Engineer" OR Takeoff Engineer OR "Quantity Take-off Engineer" OR "Fit-Out Estimator" OR "Commercial Engineer" OR "Technical Office Engineer" OR "Project Coordinator" OR "Interior Estimator" OR "Joinery Estimator" OR "Civil Estimator" OR "MEP Estimator")';
+    const indeedNegative = "NOT (senior OR manager OR electrical OR mechanical)";
+
+    const linkedinContainer = document.getElementById("linkedin-links");
+    const indeedContainer = document.getElementById("indeed-links");
+
+    // ======= LinkedIn Action-Based Links =======
+    roles.forEach(role => {
+        let section = document.createElement("div");
+        section.innerHTML = `<h3>${role.name} - Action Based</h3>`;
+        actions.forEach(action => {
+            const url = `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(role.keywords + ' AND ' + action + ' ' + role.negativeAction)}`;
+            section.innerHTML += `<a class="link-button" target="_blank" href="${url}">${action}</a>`;
+        });
+        linkedinContainer.appendChild(section);
+    });
+
+    // ======= LinkedIn Location-Based Links (Only NOT senior) =======
+    roles.forEach(role => {
+        let section = document.createElement("div");
+        section.innerHTML = `<h3>${role.name} - Location Based</h3>`;
+        linkedinLocations.forEach(loc => {
+            const url = `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(role.keywords + ' AND ' + loc + ' ' + role.negativeLocation)}`;
+            section.innerHTML += `<a class="link-button" target="_blank" href="${url}">${loc}</a>`;
+        });
+        linkedinContainer.appendChild(section);
+    });
+
+    // ======= Indeed Links (All Roles Combined + Locations + Negative Filters) =======
+    let indeedSection = document.createElement("div");
+    indeedSection.innerHTML = `<h3>All Roles - Indeed Location Based</h3>`;
+    indeedLocations.forEach(loc => {
+        const url = `https://ae.indeed.com/jobs?q=${encodeURIComponent(indeedRoles + ' AND ' + loc + ' ' + indeedNegative)}`;
+        indeedSection.innerHTML += `<a class="link-button" target="_blank" href="${url}">${loc}</a>`;
+    });
+    indeedContainer.appendChild(indeedSection);
+</script>
+
+</body>
+</html>
